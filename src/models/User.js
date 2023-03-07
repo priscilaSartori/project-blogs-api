@@ -1,9 +1,9 @@
 const UserSchema = (sequelize, DataTypes) => {
   const UserTable = sequelize.define('User', {
-    id: DataTypes.INTEGER,
+    id: { type: DataTypes.INTEGER, primaryKey: true },
     displayName: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.INTEGER,
+    password: DataTypes.STRING,
     image: DataTypes.STRING
   },
   {
@@ -11,7 +11,9 @@ const UserSchema = (sequelize, DataTypes) => {
     underscored: true, // snake_case e camelCase
     timestamps: false, // Não gera a createdAt e updatedAt (data de criação e ultima atualização, em migrations)
   });
+  // UserTable.removeAttribute('id');
   return UserTable;
 };
+
 
 module.exports = UserSchema;
