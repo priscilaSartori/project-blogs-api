@@ -1,4 +1,4 @@
-const userService = require('../services/userService');
+const loginService = require('../services/loginService');
 const { createToken } = require('../utils/jwt.util');
 require('dotenv/config');
 
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     return res.status(400)
       .json({ message: 'Some required fields are missing' });
   }
-    const user = await userService.getByLogin(email, password);
+    const user = await loginService.getByLogin(email, password);
   if (!user) {
     return res
       .status(400)
