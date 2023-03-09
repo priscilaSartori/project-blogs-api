@@ -11,5 +11,4 @@ const CategorySchema = (sequelize, DataTypes) => {
   return UserTable;
 };
 
-
 module.exports = CategorySchema;
