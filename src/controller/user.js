@@ -1,4 +1,4 @@
-const { createUser, getByEmail, getUsers } = require('../services/userService');
+const { createUser, getByEmail, getUsers, getUserId } = require('../services/userService');
 const { createToken } = require('../utils/jwt.util');
 require('dotenv/config');
 
@@ -34,4 +34,20 @@ const getUsersController = async (_req, res) => {
   }
 };
 
-module.exports = { createUserController, getUsersController };
+const getUserIdController = async (req, res) => {
+  try {
+  const { id } = req.params;
+  const userId = await getUserId(id);
+  if (!userId) {
+    return res.status(404).json({ message: 'User does not exist' }); 
+  }
+    return res.status(200).json(userId);
+  } catch (err) {
+    res.status(500).json({
+      message: 'Erro ao buscar usuários no banco',
+      error: err.message,
+    });
+  }
+};
+
+module.exports = { createUserController, getUsersController, getUserIdController };
