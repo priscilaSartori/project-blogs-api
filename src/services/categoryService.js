@@ -3,4 +3,6 @@ const { Category } = require('../models');
 const createCategory = ({ name }) =>
   Category.create({ name });
 
-module.exports = { createCategory };
+const getCategory = () => Category.findAll();
+
+module.exports = { createCategory, getCategory };
