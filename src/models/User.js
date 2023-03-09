@@ -8,10 +8,16 @@ const UserSchema = (sequelize, DataTypes) => {
   },
   {
     tableName: 'users',
-    underscored: true, // snake_case e camelCase
-    timestamps: false, // Não gera a createdAt e updatedAt (data de criação e ultima atualização, em migrations)
+    underscored: true, 
+    timestamps: false, 
   });
-  // UserTable.removeAttribute('id');
+
+  UserTable.associate = (models) => {
+    UserTable.hasMany(models.BlogPost, {
+      foreignKey: 'userId',
+      as: 'User',
+    });
+  }
   return UserTable;
 };
 
