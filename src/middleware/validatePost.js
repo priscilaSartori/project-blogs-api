@@ -47,4 +47,9 @@ const validateDelete = async (req, res, next) => {
   next();
 };
 
-module.exports = { validateFields, validateCategory, validateUpdate, validateDelete };
+module.exports = {
+  validateFields,
+  validateCategory, 
+  validateUpdate,
+  validateDelete,
+};

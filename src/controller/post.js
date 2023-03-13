@@ -1,5 +1,5 @@
 const { createBlogPost, createPost, getPost, 
-  getPostId, updatePost, deletePost } = require('../services/postService');
+  getPostId, updatePost, deletePost, searchPost } = require('../services/postService');
 require('dotenv/config');
 
 const createBlogPostController = async (req, res) => {
@@ -49,10 +49,17 @@ const deletePostController = async (req, res) => {
   }
 };
 
+const searchPostController = async (req, res) => {
+  const { q } = req.query;
+  const search = await searchPost(q);
+  res.status(200).json(search);
+};
+
 module.exports = {
   createBlogPostController, 
   getPostController, 
   getPostIdController, 
   updatePostController,
   deletePostController,
+  searchPostController,
 };
