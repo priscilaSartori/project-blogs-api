@@ -1,4 +1,5 @@
-const { createUser, getByEmail, getUsers, getUserId } = require('../services/userService');
+const { createUser, getByEmail, getUsers, 
+  getUserId, deleteUser } = require('../services/userService');
 const { createToken } = require('../utils/jwt.util');
 require('dotenv/config');
 
@@ -50,4 +51,19 @@ const getUserIdController = async (req, res) => {
   }
 };
 
-module.exports = { createUserController, getUsersController, getUserIdController };
+const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.data;
+    await deleteUser(id);
+    return res.status(204).json();
+  } catch (e) {
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+};
+
+module.exports = { 
+  createUserController,
+  getUsersController, 
+  getUserIdController,
+  deleteUserController, 
+};
