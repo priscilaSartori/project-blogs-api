@@ -1,4 +1,7 @@
 const { getCategoryId } = require('../services/categoryService');
+const { verifyToken } = require('../utils/jwt.util');
+const { getPostId } = require('../services/postService');
+require('dotenv/config');
 
 const validateCategory = async (req, res, next) => {
   const { categoryIds } = req.body;
@@ -19,10 +22,29 @@ const validateFields = async (req, res, next) => {
 
 const validateUpdate = async (req, res, next) => {
   const { title, content } = req.body;
-  if (!title || !content) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
+  const { id } = req.params;
+    const { authorization } = req.headers;
+    const payload = verifyToken(authorization);
+    const postId = await getPostId(id);
+    if (postId.dataValues.userId !== payload.data.id) {
+      return res.status(401).json({ message: 'Unauthorized user' }); 
+    }
+    if (!title || !content) {
+      return res.status(400).json({ message: 'Some required fields are missing' });
+    }
+    next();
+};
+
+const validateDelete = async (req, res, next) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  const payload = verifyToken(authorization);
+  const postId = await getPostId(id);
+  if (!postId) return res.status(404).json({ message: 'Post does not exist' });
+  if (postId.dataValues.userId !== payload.data.id) {
+    return res.status(401).json({ message: 'Unauthorized user' }); 
   }
   next();
 };
 
-module.exports = { validateFields, validateCategory, validateUpdate };
+module.exports = { validateFields, validateCategory, validateUpdate, validateDelete };
