@@ -1,4 +1,4 @@
-const { createBlogPost, createPost } = require('../services/postService');
+const { createBlogPost, createPost, getPost } = require('../services/postService');
 require('dotenv/config');
 
 const createBlogPostController = async (req, res) => {
@@ -14,4 +14,9 @@ const createBlogPostController = async (req, res) => {
   res.status(201).json(blogPost);
 };
 
-module.exports = { createBlogPostController };
+const getPostController = async (req, res) => {
+  const allPost = await getPost();
+  return res.status(200).json(allPost);
+};
+
+module.exports = { createBlogPostController, getPostController };

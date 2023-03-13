@@ -7,7 +7,7 @@ const UserSchema = (sequelize, DataTypes) => {
     image: DataTypes.STRING
   },
   {
-    tableName: 'users',
+    // tableName: 'users',
     underscored: true, 
     timestamps: false, 
   });
@@ -15,7 +15,7 @@ const UserSchema = (sequelize, DataTypes) => {
   UserTable.associate = (models) => {
     UserTable.hasMany(models.BlogPost, {
       foreignKey: 'userId',
-      as: 'User',
+      as: 'Post',
     });
   }
   return UserTable;
