@@ -5,4 +5,6 @@ const createCategory = ({ name }) =>
 
 const getCategory = () => Category.findAll();
 
-module.exports = { createCategory, getCategory };
+const getCategoryId = (id) => Category.findByPk(id);
+
+module.exports = { createCategory, getCategory, getCategoryId };

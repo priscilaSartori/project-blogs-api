@@ -4,7 +4,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
     categoryId: DataTypes.INTEGER,
   },
   {
-    tableName: 'postCategory',
+    tableName: 'posts_categories',
     underscored: true, 
     timestamps: false, 
   });
@@ -20,7 +20,7 @@ const PostCategorySchema = (sequelize, DataTypes) => {
       as: 'blogPost',
       through: PostCategoryTable,
       foreignKey: 'postId', 
-      otherKey: 'categoryId', 
+      otherKey: 'categoryIdd', 
     });
   }
 
