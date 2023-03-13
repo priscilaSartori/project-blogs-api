@@ -1,7 +1,7 @@
 const express = require('express');
 
-const { createBlogPostController,
-   getPostController, getPostIdController, updatePostController } = require('../controller/post');
+const { createBlogPostController, getPostController, getPostIdController,
+   updatePostController, deletePostController } = require('../controller/post');
 const validateToken = require('../middleware/validateToken');
 const { validateFields, validateCategory, validateUpdate } = require('../middleware/validatePost');
 
@@ -10,5 +10,6 @@ postRouter.post('/', validateToken, validateFields, validateCategory, createBlog
 postRouter.get('/', validateToken, getPostController);
 postRouter.get('/:id', validateToken, getPostIdController);
 postRouter.put('/:id', validateToken, validateUpdate, updatePostController);
+postRouter.delete('/:id', validateToken, deletePostController);
 
 module.exports = postRouter;
