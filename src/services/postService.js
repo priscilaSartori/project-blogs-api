@@ -13,6 +13,14 @@ const getPost = () => BlogPost.findAll({
   ],
 });
 
+const getPostId = (id) => BlogPost.findOne({
+  where: { id },
+  include: [
+    { model: User, as: 'user', attributes: { exclude: 'password' } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
 module.exports = {
-  createBlogPost, createPost, getPost,
+  createBlogPost, createPost, getPost, getPostId,
 };

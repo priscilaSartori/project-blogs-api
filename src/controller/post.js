@@ -1,4 +1,4 @@
-const { createBlogPost, createPost, getPost } = require('../services/postService');
+const { createBlogPost, createPost, getPost, getPostId } = require('../services/postService');
 require('dotenv/config');
 
 const createBlogPostController = async (req, res) => {
@@ -19,4 +19,11 @@ const getPostController = async (req, res) => {
   return res.status(200).json(allPost);
 };
 
-module.exports = { createBlogPostController, getPostController };
+const getPostIdController = async (req, res) => {
+  const { id } = req.params;
+  const user = await getPostId(id);
+  if (!user) return res.status(404).json({ message: 'Post does not exist' });
+  return res.status(200).json(user);
+};
+
+module.exports = { createBlogPostController, getPostController, getPostIdController };
