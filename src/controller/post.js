@@ -1,4 +1,11 @@
-const { createBlogPost, createPost, getPost, getPostId } = require('../services/postService');
+const { verifyToken } = require('../utils/jwt.util');
+const { 
+  createBlogPost, 
+  createPost,
+  getPost, 
+  getPostId, 
+  updatePost, 
+} = require('../services/postService');
 require('dotenv/config');
 
 const createBlogPostController = async (req, res) => {
@@ -26,4 +33,27 @@ const getPostIdController = async (req, res) => {
   return res.status(200).json(user);
 };
 
-module.exports = { createBlogPostController, getPostController, getPostIdController };
+const updatePostController = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    const payload = verifyToken(authorization);
+    const postId = await getPostId(id);
+    if (postId.dataValues.userId !== payload.data.id) {
+      return res.status(401).json({ message: 'Unauthorized user' }); 
+    }
+    await updatePost(id, title, content);
+    const newPostId = await getPostId(id);
+    return res.status(200).json(newPostId);
+  } catch (e) {
+    res.status(500).json({ message: 'Algo deu errado' });
+  }
+};
+
+module.exports = {
+  createBlogPostController, 
+  getPostController, 
+  getPostIdController, 
+  updatePostController,
+};

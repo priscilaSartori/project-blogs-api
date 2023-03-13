@@ -21,6 +21,14 @@ const getPostId = (id) => BlogPost.findOne({
   ],
 });
 
+const updatePost = async (id, title, content) => {
+  const [updatedPost] = await BlogPost.update(
+    { title, content },
+    { where: { id } },
+  );
+  return updatedPost;
+};
+
 module.exports = {
-  createBlogPost, createPost, getPost, getPostId,
+  createBlogPost, createPost, getPost, getPostId, updatePost,
 };

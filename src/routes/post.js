@@ -1,13 +1,14 @@
 const express = require('express');
 
 const { createBlogPostController,
-   getPostController, getPostIdController } = require('../controller/post');
+   getPostController, getPostIdController, updatePostController } = require('../controller/post');
 const validateToken = require('../middleware/validateToken');
-const { validateFields, validateCategory } = require('../middleware/validatePost');
+const { validateFields, validateCategory, validateUpdate } = require('../middleware/validatePost');
 
 const postRouter = express.Router();
 postRouter.post('/', validateToken, validateFields, validateCategory, createBlogPostController);
 postRouter.get('/', validateToken, getPostController);
 postRouter.get('/:id', validateToken, getPostIdController);
+postRouter.put('/:id', validateToken, validateUpdate, updatePostController);
 
 module.exports = postRouter;
